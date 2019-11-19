@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Article;
+use App\ArticleCategory;
 use DataTables;
 
 class ArticleController extends Controller
@@ -26,9 +27,13 @@ class ArticleController extends Controller
                 ->editColumn('id_kategory', function(Article $article) {
                     return $article->category->name;
                 })
-                ->make(true);
+                ->addColumn('action', function($row) {
+                    return view('admin.action', ['id' => $row->id]);
+                })
+                ->rawColumns(['action'])
+                ->toJson();
         }
-        return view('article');
+        return view('article', ['kategori' => ArticleCategory::all()]);
     }
 
     /**
@@ -49,7 +54,13 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $id = $request->id;
+        $source = Article::updateOrCreate(['id' => $id], [
+            'name' => $request->name,
+            'description' => $request->description,
+            'id_kategory' => $request->category,
+        ]);
+        return response()->json($source);
     }
 
     /**
@@ -71,7 +82,9 @@ class ArticleController extends Controller
      */
     public function edit($id)
     {
-        //
+        $where = array('id' => $id);
+        $source = Article::where($where)->first();
+        return response()->json($source);
     }
 
     /**
@@ -94,6 +107,7 @@ class ArticleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $source = Article::where('id', $id)->delete();
+        return response()->json($source);
     }
 }

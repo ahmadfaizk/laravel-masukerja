@@ -23,6 +23,10 @@ class ArticleCategoryController extends Controller
             $data = ArticleCategory::all();
             return DataTables::of($data)
                 ->addIndexColumn()
+                ->addColumn('action', function($row) {
+                    return view('admin.action', ['id' => $row->id]);
+                })
+                ->rawColumns(['action'])
                 ->toJson();
         }
         return view('article-category');
@@ -46,7 +50,11 @@ class ArticleCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $id = $request->id;
+        $source = ArticleCategory::updateOrCreate(['id' => $id], [
+            'name' => $request->name,
+        ]);
+        return response()->json($source);
     }
 
     /**
@@ -68,7 +76,9 @@ class ArticleCategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $where = array('id' => $id);
+        $source = ArticleCategory::where($where)->first();
+        return response()->json($source);
     }
 
     /**
@@ -91,6 +101,7 @@ class ArticleCategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $source = ArticleCategory::where('id', $id)->delete();
+        return response()->json($source);
     }
 }

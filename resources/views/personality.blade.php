@@ -58,29 +58,25 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Description</label>
                         <div class="col-sm-12">
-                            <input type="text" class="form-control" id="description" name="description"
-                                placeholder="Enter Description" required="">
+                            <textarea class="form-control" id="description" name="description" placeholder="Enter Description" required=""></textarea>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Characteristic</label>
                         <div class="col-sm-12">
-                            <input type="text" class="form-control" id="characteristic" name="characteristic"
-                                placeholder="Enter Characteristic" required="">
+                            <textarea class="form-control" id="characteristic" name="characteristic" placeholder="Enter Characteristic" required=""></textarea>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Suggestion</label>
                         <div class="col-sm-12">
-                            <input type="text" class="form-control" id="suggestion" name="suggestion"
-                                placeholder="Enter Suggestion" required="">
+                            <textarea class="form-control" id="suggestion" name="suggestion" placeholder="Enter Suggestion" required=""></textarea>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Job</label>
                         <div class="col-sm-12">
-                            <input type="text" class="form-control" id="job" name="job"
-                                placeholder="Enter Job" value="" required="">
+                            <textarea type="text" class="form-control" id="job" name="job" placeholder="Enter Job" value="" required=""></textarea>
                         </div>
                     </div>
                     <div class="col-sm-offset-2 col-sm-10">

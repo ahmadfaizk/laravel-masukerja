@@ -10,7 +10,7 @@ class Article extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'name', 'date', 'location', 'description', 'id_kategory',
+        'name', 'date', 'description', 'id_kategory',
     ];
 
     public function category() {
