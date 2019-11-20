@@ -71,7 +71,8 @@ class ArticleController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = Article::findOrFail($id);
+        return response()->json($data);
     }
 
     /**

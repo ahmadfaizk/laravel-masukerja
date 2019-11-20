@@ -24,11 +24,11 @@ class JobFieldController extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row) {
-                    return view('admin.action', ['id' => $row->id]);
+                    return view('admin.action2', ['id' => $row->id]);
                 })
                 ->toJson();
         }
-        return view('job-field');
+        return view('job-field-source');
     }
 
     /**

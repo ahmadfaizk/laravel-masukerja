@@ -18,7 +18,6 @@
                             <td>Action</td>
                         </tr>
                     </thead>
-                    <tbody></tbody>
                 </table>
             </div>
         </div>
@@ -83,7 +82,7 @@
             $('#btn-save').val("create");
             $('#id').val('');
             $('#form').trigger("reset");
-            $('#title-modal').html("Add New Job Source");
+            $('#title-modal').html("Add New Article Category");
             $('#ajax-modal').modal('show');
         });
         $('body').on('click', '#edit', function() {
@@ -91,7 +90,7 @@
             console.log(id);
             $.get('/article-category/' + id + '/edit', function(data) {
                 $('#name-error').hide();
-                $('#title-modal').html("Edit Job Source");
+                $('#title-modal').html("Edit Article Category");
                 $('#ajax-modal').modal('show');
                 $('#id').val(data.id);
                 $('#name').val(data.name);

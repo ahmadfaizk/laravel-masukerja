@@ -15,7 +15,7 @@
                         <tr>
                             <td>No</td>
                             <td>Name</td>
-                            <td>Kategory</td>
+                            <td>Kategori</td>
                             <td>Created At</td>
                             <td>Action</td>
                         </tr>
@@ -46,16 +46,13 @@
                         <label for="category" class="col-sm-2 control-label">Kategori</label>
                         <div class="col-sm-12">
                             <select name="category" id="category" class="form-control">
-                            @foreach ($kategori as $item)
-                                <option value="{{$item->id}}">{{$item->name}}</option>
-                            @endforeach
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="description" class="col-sm-2 control-label">Description</label>
                         <div class="col-sm-12">
-                            <textarea id="description" name="description" class="form-control" placeholder="Enter Description" value="" required=""></textarea>
+                            <textarea id="description" name="description" class="form-control" placeholder="Enter Description" value="" required="" rows="6"></textarea>
                         </div>
                     </div>
                     <div class="col-sm-offset-2 col-sm-10">
@@ -105,21 +102,41 @@
                 },
             ]
         });
+        $.get('/article-category/', function(data) {
+            for (let i=0; i<data.data.length; i++) {
+                var option = new Option(data.data[i].name, data.data[i].id);
+                $('#category').append($(option));
+            }
+        });
+        $('body').on('click', '#show', function () {
+            var id = $(this).data('id');
+            $("#form :input").attr("disabled", true);
+            $('#title-modal').html("Show Article");
+            $.get('/article/' + id, function (data) {
+                $('#ajax-modal').modal('show');
+                $('#id').val(data.id);
+                $('#category').val(data.id_kategory);
+                $('#name').val(data.name);
+                $('#description').val(data.description);
+            });
+        });
         $('#create').click(function() {
             $('#btn-save').val("create");
             $('#id').val('');
             $('#form').trigger("reset");
-            $('#title-modal').html("Add New Job Source");
+            $('#title-modal').html("Add New Article");
             $('#ajax-modal').modal('show');
+            $("#form :input").attr("disabled", false);
         });
         $('body').on('click', '#edit', function() {
+            $("#form :input").attr("disabled", false);
             var id = $(this).data('id');
-            console.log($(this).data);
             $.get('/article/' + id + '/edit', function(data) {
                 $('#name-error').hide();
-                $('#title-modal').html("Edit Job Source");
+                $('#title-modal').html("Edit Article");
                 $('#ajax-modal').modal('show');
                 $('#id').val(data.id);
+                $('#category').val(data.id_kategory);
                 $('#name').val(data.name);
                 $('#description').val(data.description);
             });

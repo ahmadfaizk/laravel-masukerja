@@ -72,7 +72,8 @@ class MBTIPersonalityController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = MBTIPersonality::findOrFail($id);
+        return response()->json($data);
     }
 
     /**
