@@ -109,7 +109,7 @@ class MBTIPersonalityController extends Controller
      */
     public function destroy($id)
     {
-        $mbti = MBTIPersonality::where('id', $id)->delete();
-        return response()->json($mbti);
+        $data = MBTIPersonality::where('id', $id)->delete();
+        return response()->json($data);
     }
 }

@@ -29,6 +29,10 @@ class JobController extends Controller
                 ->editColumn('id_job_field', function(Job $job) {
                     return $job->field->name;
                 })
+                ->addColumn('action', function($row) {
+                    return view('admin.action', ['id' => $row->id]);
+                })
+                ->rawColumns(['action'])
                 ->toJson();
         }
         return view('job');
@@ -52,7 +56,21 @@ class JobController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $id = $request->id;
+        $data = Job::updateOrCreate(['id' => $id], [
+            'name' => $request->name,
+            'company' => $request->company,
+            'location' => $request->location,
+            'id_job_source' => $request->source,
+            'id_job_field' => $request->field,
+            'min_salary' => $request->min_salary,
+            'max_salary' => $request->max_salary,
+            'posting_date' => $request->posting_date,
+            'closing_date' => $request->closing_date,
+            'url' => $request->url,
+            'description' => $request->description
+        ]);
+        return response()->json($data);
     }
 
     /**
@@ -63,7 +81,8 @@ class JobController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = Job::findOrFail($id);
+        return response()->json($data);
     }
 
     /**
@@ -74,7 +93,9 @@ class JobController extends Controller
      */
     public function edit($id)
     {
-        //
+        $where = array('id' => $id);
+        $mbti = Job::where($where)->first();
+        return response()->json($mbti);
     }
 
     /**
@@ -97,6 +118,7 @@ class JobController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data = Job::where('id', $id)->delete();
+        return response()->json($data);
     }
 }
