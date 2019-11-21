@@ -10,7 +10,7 @@ class CodeQuestion extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'code',
+        'id', 'code',
     ];
 
     public function question() {

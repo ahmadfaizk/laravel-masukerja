@@ -16,7 +16,6 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('/user', 'UserController');
 Route::resource('/article', 'ArticleController');
@@ -25,5 +24,6 @@ Route::resource('/job', 'JobController');
 Route::resource('/job-field', 'JobFieldController');
 Route::resource('/job-source', 'JobSourceController');
 Route::resource('/personality', 'MBTIPersonalityController');
-Route::resource('/question', 'QuestionController');
-Route::resource('/answer', 'AnswerController');
+Route::resource('/test', 'TestController');
+Route::get('/question-code', 'TestController@codeQuestion');
+Route::get('/answer-code', 'TestController@codeAnswer');
