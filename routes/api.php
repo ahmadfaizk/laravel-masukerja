@@ -18,7 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/job', function() {
-    $data = Job::all();
-    return $data;
-});
+Route::post('register', 'API\AuthController@register');
+Route::post('login', 'API\AuthController@login');
+Route::get('job', 'API\JobController@index');
+Route::get('user', 'API\AuthController@getAuthenticatedUser')->middleware('jwt.verify');

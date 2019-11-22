@@ -8,6 +8,7 @@ class Article extends Model
 {
     protected $table = 'articles';
     public $timestamps = false;
+    const CREATED_AT = 'date';
 
     protected $fillable = [
         'name', 'date', 'description', 'id_kategory',
