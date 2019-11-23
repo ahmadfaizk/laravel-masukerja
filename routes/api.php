@@ -22,3 +22,5 @@ Route::post('register', 'API\AuthController@register');
 Route::post('login', 'API\AuthController@login');
 Route::get('job', 'API\JobController@index');
 Route::get('user', 'API\AuthController@getAuthenticatedUser')->middleware('jwt.verify');
+
+Route::post('jobsid', 'API\CrawlController@jobsid');
