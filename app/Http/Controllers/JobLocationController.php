@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\JobSource;
+use App\JobLocation;
 use Illuminate\Http\Request;
 use DataTables;
 
-class JobSourceController extends Controller
+class JobLocationController extends Controller
 {
     public function __construct()
     {
@@ -20,7 +20,7 @@ class JobSourceController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = JobSource::all();
+            $data = JobLocation::all();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('job', function($row) {
@@ -32,7 +32,7 @@ class JobSourceController extends Controller
                 ->rawColumns(['action'])
                 ->toJson();
         }
-        return view('job-source');
+        return view('job-location');
     }
 
     /**
@@ -54,10 +54,10 @@ class JobSourceController extends Controller
     public function store(Request $request)
     {
         $id = $request->id;
-        $source = JobSource::updateOrCreate(['id' => $id], [
+        $field = JobLocation::updateOrCreate(['id' => $id], [
             'name' => $request->name,
         ]);
-        return response()->json($source);
+        return response()->json($field);
     }
 
     /**
@@ -80,8 +80,8 @@ class JobSourceController extends Controller
     public function edit($id)
     {
         $where = array('id' => $id);
-        $source = JobSource::where($where)->first();
-        return response()->json($source);
+        $field = JobLocation::where($where)->first();
+        return response()->json($field);
     }
 
     /**
@@ -104,12 +104,12 @@ class JobSourceController extends Controller
      */
     public function destroy($id)
     {
-        $source = JobSource::where('id', $id)->delete();
-        return response()->json($source);
+        $field = JobLocation::find($id)->delete();
+        return response()->json($field);
     }
 
-    public function json(){
-        $data = JobSource::all();
+    public function json() {
+        $data = JobLocation::all();
         return response()->json($data);
     }
 }

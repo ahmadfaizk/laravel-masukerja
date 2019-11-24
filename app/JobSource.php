@@ -14,6 +14,6 @@ class JobSource extends Model
     ];
 
     public function job() {
-        return $this->hasMany('App\Job');
+        return $this->hasMany('App\Job', 'id_job_source');
     }
 }

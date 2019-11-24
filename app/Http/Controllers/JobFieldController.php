@@ -23,12 +23,16 @@ class JobFieldController extends Controller
             $data = JobField::all();
             return DataTables::of($data)
                 ->addIndexColumn()
+                ->addColumn('job', function($row) {
+                    return $row->job->count();
+                })
                 ->addColumn('action', function($row) {
                     return view('admin.action2', ['id' => $row->id]);
                 })
+                ->rawColumns(['action'])
                 ->toJson();
         }
-        return view('job-field-source');
+        return view('job-field');
     }
 
     /**
@@ -102,5 +106,10 @@ class JobFieldController extends Controller
     {
         $field = JobField::where('id', $id)->delete();
         return response()->json($field);
+    }
+
+    public function json() {
+        $data = JobField::all();
+        return response()->json($data);
     }
 }

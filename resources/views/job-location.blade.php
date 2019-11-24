@@ -1,6 +1,6 @@
 @extends('admin.datatable')
 
-@section('title', 'Job Source')
+@section('title', 'Job Location')
 
 @section('content')
 <div class="row">
@@ -10,7 +10,7 @@
                 <a href="javascript:void(0)" class="btn btn-info ml-3" id="create">Add New</a>
             </div>
             <div class="card-body">
-                <table id="users-table" class="table table-striped">
+                <table id="table" class="table table-striped">
                     <thead>
                         <tr>
                             <td>No</td>
@@ -19,6 +19,7 @@
                             <td>Action</td>
                         </tr>
                     </thead>
+                    <tbody></tbody>
                 </table>
             </div>
         </div>
@@ -59,10 +60,10 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-        var table = $('#users-table').DataTable({
+        var table = $('table').DataTable({
             processing: true,
             serverSide: true,
-            ajax: '{{ route('job-source.index') }}',
+            ajax: '{{ route('job-location.index') }}',
             columns: [{
                     data: 'DT_RowIndex',
                     name: 'DT_RowIndex'
@@ -87,15 +88,15 @@
             $('#btn-save').val("create");
             $('#id').val('');
             $('#form').trigger("reset");
-            $('#title-modal').html("Add New Job Source");
+            $('#title-modal').html("Add New Job Location");
             $('#ajax-modal').modal('show');
         });
         $('body').on('click', '#edit', function() {
             var id = $(this).data('id');
             console.log(id);
-            $.get('/job-source/' + id + '/edit', function(data) {
+            $.get('/job-location/' + id + '/edit', function(data) {
                 $('#name-error').hide();
-                $('#title-modal').html("Edit Job Source");
+                $('#title-modal').html("Edit Job Location");
                 $('#ajax-modal').modal('show');
                 $('#id').val(data.id);
                 $('#name').val(data.name);
@@ -107,7 +108,7 @@
             if (confirm("Are You Sure Want to Delete !")) {
                 $.ajax({
                     type: "DELETE",
-                    url: 'job-source/' + id,
+                    url: 'job-location/' + id,
                     success: function(data) {
                         table.draw();
                     },
@@ -122,7 +123,7 @@
             $(this).html('Sending..');
             $.ajax({
                 data: $('#form').serialize(),
-                url: '{{ route('job-source.store') }}',
+                url: '{{ route('job-location.store') }}',
                 type: "POST",
                 dataType: 'json',
                 success: function (data) {
@@ -132,6 +133,7 @@
                 },
                 error: function (data) {
                     console.log('Error:', data);
+                    $('#btn-save').html('Save Changes');
                 }
             });
             $('#btn-save').html('Save Changes');

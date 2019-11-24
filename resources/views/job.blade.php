@@ -62,8 +62,7 @@
                                 <div class="form-group">
                                     <label for="location" class="col-sm-2 control-label">Location</label>
                                     <div class="col-sm-12">
-                                        <input type="text" class="form-control" id="location" name="location"
-                                            placeholder="Enter Location" maxlength="50" required="">
+                                        <select name="location" id="location" class="form-control"></select>
                                     </div>
                                 </div>
                             </div>
@@ -179,8 +178,8 @@
                     name: 'company'
                 },
                 {
-                    data: 'location',
-                    name: 'location'
+                    data: 'id_job_location',
+                    name: 'id_job_location'
                 },
                 {
                     data: 'id_job_source',
@@ -214,16 +213,22 @@
                 },
             ]
         });
-        $.get('/job-field/', function(data) {
-            for (let i=0; i<data.data.length; i++) {
-                var option = new Option(data.data[i].name, data.data[i].id);
+        $.get('/job-field/json', function(data) {
+            for (let i=0; i<data.length; i++) {
+                var option = new Option(data[i].name, data[i].id);
                 $('#field').append($(option));
             }
         });
-        $.get('/job-source/', function(data) {
-            for (let i=0; i<data.data.length; i++) {
-                var option = new Option(data.data[i].name, data.data[i].id);
+        $.get('/job-source/json', function(data) {
+            for (let i=0; i<data.length; i++) {
+                var option = new Option(data[i].name, data[i].id);
                 $('#source').append($(option));
+            }
+        });
+        $.get('/job-location/json', function(data) {
+            for (let i=0; i<data.length; i++) {
+                var option = new Option(data[i].name, data[i].id);
+                $('#location').append($(option));
             }
         });
         $('#create').click(function () {
@@ -243,7 +248,7 @@
                 $('#id').val(data.id);
                 $('#name').val(data.name);
                 $('#company').val(data.company);
-                $('#location').val(data.location);
+                $('#location').val(data.id_job_location);
                 $('#field').val(data.id_job_field);
                 $('#source').val(data.id_job_source);
                 $('#min_salary').val(data.min_salary);
@@ -263,7 +268,7 @@
                 $('#id').val(data.id);
                 $('#name').val(data.name);
                 $('#company').val(data.company);
-                $('#location').val(data.location);
+                $('#location').val(data.id_job_location);
                 $('#field').val(data.id_job_field);
                 $('#source').val(data.id_job_source);
                 $('#min_salary').val(data.min_salary);

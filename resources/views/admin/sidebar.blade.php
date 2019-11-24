@@ -47,13 +47,25 @@
                         <li class="nav-item">
                             <a href="/job" class="nav-link">
                                 <i class="nav-icon far fa-circle"></i>
-                                <p>Jobs</p>
+                                <p>List Jobs</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="/job-field" class="nav-link">
                                 <i class="nav-icon far fa-circle"></i>
-                                <p>Job Field & Source</p>
+                                <p>Job Field</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/job-source" class="nav-link">
+                                <i class="nav-icon far fa-circle"></i>
+                                <p>Job Source</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/job-location" class="nav-link">
+                                <i class="nav-icon far fa-circle"></i>
+                                <p>Job Location</p>
                             </a>
                         </li>
                     </ul>

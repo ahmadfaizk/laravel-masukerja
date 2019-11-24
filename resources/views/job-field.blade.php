@@ -15,6 +15,7 @@
                         <tr>
                             <td>No</td>
                             <td>Nama</td>
+                            <td>Job</td>
                             <td>Action</td>
                         </tr>
                     </thead>
@@ -70,6 +71,10 @@
                 {
                     data: 'name',
                     name: 'name'
+                },
+                {
+                    data: 'job',
+                    name: 'job'
                 },
                 {
                     data: 'action',

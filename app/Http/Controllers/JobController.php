@@ -23,11 +23,14 @@ class JobController extends Controller
             $data = Job::all();
             return DataTables::of($data)
                 ->addIndexColumn()
-                ->editColumn('id_job_source', function(Job $job) {
-                    return $job->source->name;
+                ->editColumn('id_job_source', function($row) {
+                    return $row->source->name;
                 })
-                ->editColumn('id_job_field', function(Job $job) {
-                    return $job->field->name;
+                ->editColumn('id_job_field', function($row) {
+                    return $row->field->name;
+                })
+                ->editColumn('id_job_location', function($row) {
+                    return $row->location->name;
                 })
                 ->addColumn('action', function($row) {
                     return view('admin.action', ['id' => $row->id]);
@@ -60,7 +63,7 @@ class JobController extends Controller
         $data = Job::updateOrCreate(['id' => $id], [
             'name' => $request->name,
             'company' => $request->company,
-            'location' => $request->location,
+            'id_job_location' => $request->location,
             'id_job_source' => $request->source,
             'id_job_field' => $request->field,
             'min_salary' => $request->min_salary,
