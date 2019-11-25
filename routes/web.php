@@ -14,20 +14,24 @@
 Route::get('/', function () {
     return view('welcome');
 });
-
+Route::get('/error', function() {
+    return view('error');
+});
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
-Route::resource('/user', 'UserController');
-Route::resource('/article', 'ArticleController');
-Route::resource('/article-category', 'ArticleCategoryController');
-Route::resource('/job', 'JobController');
 Route::get('/job-field/json', 'JobFieldController@json')->name('job-field.json');
-Route::resource('/job-field', 'JobFieldController');
 Route::get('/job-source/json', 'JobSourceController@json')->name('job-source.json');
-Route::resource('/job-source', 'JobSourceController');
 Route::get('/job-location/json', 'JobLocationController@json')->name('job-location.json');
-Route::resource('/job-location', 'JobLocationController');
-Route::resource('/personality', 'MBTIPersonalityController');
-Route::resource('/test', 'TestController');
 Route::get('/question-code', 'TestController@codeQuestion');
 Route::get('/answer-code', 'TestController@codeAnswer');
+Route::resources([
+    'user' => 'UserController',
+    'article' => 'ArticleController',
+    'article-category' => 'ArticleCategoryController',
+    'job' => 'JobController',
+    'job-field' => 'JobFieldController',
+    'job-source' => 'JobSourceController',
+    'job-location' => 'JobLocationController',
+    'personality' => 'PersonalityController',
+    'test' => 'TestController'
+]);
