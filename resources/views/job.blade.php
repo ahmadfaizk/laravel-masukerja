@@ -10,7 +10,7 @@
                 <a href="javascript:void(0)" class="btn btn-info ml-3" id="create">Add New</a>
             </div>
             <div class="card-body">
-                <table id="jobs-table" class="table table-striped">
+                <table id="jobs-table" class="table table-striped display nowrap">
                     <thead>
                         <tr>
                             <td>No</td>
@@ -162,7 +162,8 @@
         var table = $('#jobs-table').DataTable({
             processing: true,
             serverSide: true,
-            responsive: true,
+            responsive: false,
+            scrollX: true,
             ajax: '{{ route('job.index') }}',
             columns: [
                 {

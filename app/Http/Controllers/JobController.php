@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Job;
 use Illuminate\Http\Request;
 use DataTables;
+use Illuminate\Support\Carbon;
 
 class JobController extends Controller
 {
@@ -31,6 +32,12 @@ class JobController extends Controller
                 })
                 ->editColumn('id_job_location', function($row) {
                     return $row->location->name;
+                })
+                ->editColumn('posting_date', function($row) {
+                    return Carbon::createFromFormat('Y-m-d', $row->posting_date)->format('d M Y');
+                })
+                ->editColumn('closing_date', function($row) {
+                    return Carbon::createFromFormat('Y-m-d', $row->closing_date)->format('d M Y');
                 })
                 ->addColumn('action', function($row) {
                     return view('admin.action', ['id' => $row->id]);

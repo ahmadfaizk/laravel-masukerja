@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Article;
 use App\ArticleCategory;
 use DataTables;
+use Illuminate\Support\Carbon;
 
 class ArticleController extends Controller
 {
@@ -24,8 +25,11 @@ class ArticleController extends Controller
             $data = Article::all();
             return DataTables::of($data)
                 ->addIndexColumn()
-                ->editColumn('id_kategory', function(Article $article) {
-                    return $article->category->name;
+                ->editColumn('id_kategory', function($row) {
+                    return $row->category->name;
+                })
+                ->editColumn('date', function($row) {
+                    return Carbon::parse($row->date)->format('i:H, d M Y');
                 })
                 ->addColumn('action', function($row) {
                     return view('admin.action', ['id' => $row->id]);
