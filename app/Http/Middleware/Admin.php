@@ -21,6 +21,6 @@ class Admin
         }
         Auth::logout();
         $request->session()->flush();
-        return redirect('/error')->with('error', "You don't have admin acces");
+        return abort(403, "You don't have admin acces");
     }
 }

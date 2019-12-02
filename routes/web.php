@@ -14,9 +14,6 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/error', function() {
-    return view('error');
-});
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/job-field/json', 'JobFieldController@json')->name('job-field.json');

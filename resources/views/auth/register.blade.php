@@ -9,13 +9,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- icheck bootstrap -->
-    <link rel="stylesheet" href="../../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="dist/css/adminlte.min.css">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
@@ -35,7 +35,7 @@
 
                     <div class="input-group mb-3">
                         <input type="text" class="form-control @error('name') is-invalid @enderror" name="name"
-                            value="{{ old('name') }}" required autocomplete="name" autofocus>
+                            value="{{ old('name') }}" required autocomplete="name" autofocus placeholder="Name">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-user"></span>
@@ -48,7 +48,7 @@
                         @enderror
                     </div>
                     <div class="input-group mb-3">
-                        <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+                        <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="Email">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
@@ -61,7 +61,7 @@
                         @enderror
                     </div>
                     <div class="input-group mb-3">
-                        <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                        <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password" placeholder="Password">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
@@ -74,7 +74,7 @@
                         @enderror
                     </div>
                     <div class="input-group mb-3">
-                        <input type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                        <input type="password" class="form-control" name="password_confirmation" required autocomplete="new-password" placeholder="Repeat Your Password">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
@@ -106,11 +106,11 @@
     <!-- /.register-box -->
 
     <!-- jQuery -->
-    <script src="../../plugins/jquery/jquery.min.js"></script>
+    <script src="plugins/jquery/jquery.min.js"></script>
     <!-- Bootstrap 4 -->
-    <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE App -->
-    <script src="../../dist/js/adminlte.min.js"></script>
+    <script src="dist/js/adminlte.min.js"></script>
 </body>
 
 </html>
