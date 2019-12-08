@@ -14,6 +14,6 @@ class ArticleCategory extends Model
     ];
 
     public function article() {
-        return $this->hasMan('App\Article');
+        return $this->hasMany('App\Article');
     }
 }

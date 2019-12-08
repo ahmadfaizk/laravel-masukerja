@@ -10,7 +10,7 @@
                 <a href="javascript:void(0)" class="btn btn-info ml-3 float-right" id="create">Add New</a>
             </div>
             <div class="card-body">
-                <table id="table" class="table table-striped">
+                <table id="table" class="table table-striped display no-wrap">
                     <thead>
                         <tr>
                             <td>No</td>

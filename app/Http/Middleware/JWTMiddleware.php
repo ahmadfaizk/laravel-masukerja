@@ -22,11 +22,17 @@ class JWTMiddleware
         try {
             $user = JWTAuth::parseToken()->authenticate();
         } catch (TokenExpiredException $e) {
-            return response()->json(['status' => 'Token Expired']);
+            return response()->json([
+                'message' => 'Token Expired'
+            ]);
         } catch (TokenInvalidException $e) {
-            return response()->json(['status' => 'Token Invalid']);
+            return response()->json([
+                'message' => 'Token Invalid'
+            ]);
         } catch (JWTException $e) {
-            return response()->json(['status' => 'Authorization Token not found']);
+            return response()->json([
+                'message' => 'Authorization Token not found'
+            ]);
         }
         return $next($request);
     }

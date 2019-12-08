@@ -132,4 +132,13 @@ class JobController extends Controller
         $data = Job::where('id', $id)->delete();
         return response()->json($data);
     }
+
+    public function deleteExpired() {
+        $date = Carbon::now()->toDateString();
+        $data = Job::where('closing_date', '<', $date)->delete();
+        return response()->json([
+            'jumlah' => $data,
+            'date' => Carbon::now()->format('d M Y')
+        ]);
+    }
 }

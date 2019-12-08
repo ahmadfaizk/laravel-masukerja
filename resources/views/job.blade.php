@@ -8,6 +8,7 @@
         <div class="card">
             <div class="card-header">
                 <a href="javascript:void(0)" class="btn btn-info ml-3" id="create">Add New</a>
+                <a href="javascript:void(0)" class="btn btn-danger ml-3" id="deleteExpired">Delete</a>
             </div>
             <div class="card-body">
                 <table id="jobs-table" class="table table-striped display nowrap">
@@ -313,6 +314,21 @@
                 }
             });
             $('#btn-save').html('Save Changes');
+        });
+        $('#deleteExpired').click(function() {
+            if (confirm("Are you sure want to delete expired job?")) {
+                $.ajax({
+                    type: "DELETE",
+                    url: 'job-delete',
+                    success: function (data) {
+                        table.draw();
+                        alert(data.jumlah + " Jobs Deleted In " + data.date);
+                    },
+                    error: function (data) {
+                        console.log('Error: ', data);
+                    }
+                });
+            }
         });
     });
 </script>
