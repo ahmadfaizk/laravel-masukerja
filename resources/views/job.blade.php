@@ -8,7 +8,7 @@
         <div class="card">
             <div class="card-header">
                 <a href="javascript:void(0)" class="btn btn-info ml-3" id="create">Add New</a>
-                <a href="javascript:void(0)" class="btn btn-danger ml-3" id="deleteExpired">Delete</a>
+                <a href="javascript:void(0)" class="btn btn-danger ml-3" id="deleteExpired">Delete Expired</a>
             </div>
             <div class="card-body">
                 <table id="jobs-table" class="table table-striped display nowrap">
@@ -121,6 +121,20 @@
                                     <label for="closing_date" class="col control-label">Closing Date</label>
                                     <div class="col-sm-12">
                                         <input type="date" class="form-control" id="closing_date" name="closing_date"
+                                            required="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-2">
+                                <img src="" alt="Logo Perusahaan" id="company-logo" class="img-fluid" style="width: 100%;">
+                            </div>
+                            <div class="col-10">
+                                <div class="form-group">
+                                    <label for="image" class="col control-label">Image URL</label>
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" id="image" name="image"
                                             required="">
                                     </div>
                                 </div>
@@ -250,6 +264,8 @@
                 $('#id').val(data.id);
                 $('#name').val(data.name);
                 $('#company').val(data.company);
+                $('#company-logo').attr('src', data.image);
+                $('#image').val(data.image);
                 $('#location').val(data.id_job_location);
                 $('#field').val(data.id_job_field);
                 $('#source').val(data.id_job_source);
@@ -270,6 +286,8 @@
                 $('#id').val(data.id);
                 $('#name').val(data.name);
                 $('#company').val(data.company);
+                $('#company-logo').attr('src', data.image);
+                $('#image_url').val(data.image);
                 $('#location').val(data.id_job_location);
                 $('#field').val(data.id_job_field);
                 $('#source').val(data.id_job_source);

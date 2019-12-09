@@ -36,32 +36,31 @@ class HomeController extends Controller
         $jobField = JobField::all();
         $label = collect([]);
         $data = collect([]);
-        $label2 = collect([]);
-        $data2 = collect([]);
         $color = collect([]);
+        $jf = collect([]);
         foreach ($jobSource as $source) {
             $label->push($source->name);
             $data->push($source->job->count());
         }
         foreach ($jobField as $field) {
             if ($field->job->count() > 0) {
-                $label2->push($field->name);
-                $data2->push($field->job->count());
-                $color->push($this->random_color());
+                $name = ['name' => $field->name, 'jumlah' => $field->job->count()];
+                $jf->push($name);
             }
         }
-        // dd($color);
+        $jf = $jf->sortByDesc('jumlah')->slice(0,10);
+        $colour = ['#dd2c00', '#ff6d00', '#ffab00', '#ffd600', '#aeea00', '#64dd17', '#00c853', '#00bfa5', '#00b8d4', '#0091ea', '#2962ff', '#304ffe', '#6200ea', '#aa00ff', '#c51162', '#d50000'];
         $jobChart = new JobChart;
         $jobChart->minimalist(true);
         $jobChart->displayLegend(true);
         $jobChart->labels($label);
         $jobChart->dataset('Job Source', 'doughnut', $data)
-            ->backgroundcolor(['#dc3545', '#007bff', '#17a2b8', '#00c0ef', '#3c8dbc', '#d2d6de']);
+            ->backgroundcolor($colour);
         $jobField = new JobChart;
         $jobField->minimalist(true);
-        $jobField->labels($label2);
-        $jobField->dataset('Job Field', 'bar', $data2)
-            ->backgroundcolor($color);
+        $jobField->labels($jf->pluck('name'));
+        $jobField->dataset('Job Field', 'bar', $jf->pluck('jumlah'))
+            ->backgroundcolor($colour);
         return view('home', [
             'user' => User::all()->count(),
             'job' => Job::all()->count(),
@@ -70,13 +69,5 @@ class HomeController extends Controller
             'jobChart' => $jobChart,
             'jobField' => $jobField,
         ]);
-    }
-
-    function random_color_part() {
-        return str_pad( dechex( mt_rand( 0, 255 ) ), 2, '0', STR_PAD_LEFT);
-    }
-
-    function random_color() {
-        return '#' . $this->random_color_part() . $this->random_color_part() . $this->random_color_part();
     }
 }

@@ -10,7 +10,7 @@ class Job extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'name', 'company', 'id_job_source', 'id_job_field', 'id_job_location', 'min_salary', 'max_salary', 'posting_date', 'closing_date', 'url', 'description',
+        'name', 'company', 'image', 'id_job_source', 'id_job_field', 'id_job_location', 'min_salary', 'max_salary', 'posting_date', 'closing_date', 'url', 'description',
     ];
 
     public function source() {

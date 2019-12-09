@@ -23,7 +23,10 @@
 <body class="hold-transition register-page">
     <div class="register-box">
         <div class="register-logo">
-            <a href="{{ url('/') }}"><b>{{ config('app.name', 'Laravel') }}</b></a>
+            <a href="{{ url('/') }}">
+                <img src="dist/img/logo.png" alt="masukerja" class="img-fluid" style="width: 80px;"><br>
+                <span style="font-size: 25px;"><b>{{ config('app.name', 'Laravel') }}</b></span>
+            </a>
         </div>
 
         <div class="card">

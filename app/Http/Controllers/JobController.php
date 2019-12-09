@@ -71,6 +71,7 @@ class JobController extends Controller
         $data = Job::updateOrCreate(['id' => $id], [
             'name' => $request->name,
             'company' => $request->company,
+            'image' => $request->image,
             'id_job_location' => $request->location,
             'id_job_source' => $request->source,
             'id_job_field' => $request->field,

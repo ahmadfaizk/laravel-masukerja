@@ -23,7 +23,10 @@
 <body class="hold-transition login-page">
     <div class="login-box">
         <div class="login-logo">
-            <a href="{{ url('/') }}"><b>{{ config('app.name', 'Laravel') }}</b></a>
+            <a href="{{ url('/') }}">
+                <img src="dist/img/logo.png" alt="masukerja" class="img-fluid" style="width: 80px;"><br>
+                <span style="font-size: 25px;"><b>{{ config('app.name', 'Laravel') }}</b></span>
+            </a>
         </div>
         <!-- /.login-logo -->
         <div class="card">

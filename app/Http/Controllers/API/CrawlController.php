@@ -14,6 +14,7 @@ class CrawlController extends Controller
         $this->validate($request, [
             'name' => 'required|string',
             'company' => 'required|string',
+            'image' => 'required|string',
             'location' => 'required|string',
             'field' => 'required|string',
             'source' => 'required|int',
@@ -27,28 +28,34 @@ class CrawlController extends Controller
 
         $name = $request->input('name');
         $company = $request->input('company');
+        $image = $request->input('image');
         $location = $request->input('location');
         $field = $request->input('field');
-        $source = $request->input(('source'));
+        $source = $request->input('source');
         $min_salary = $request->input('min_salary');
         $max_salary = $request->input('max_salary');
         $posting_date = $request->input('posting_date');
         $closing_date = $request->input('closing_date');
         $url = $request->input('url');
         $description = $request->input('description');
-        $jf = JobField::where('name', $field)->first()->id;
-        $jl = JobLocation::where('name', $location)->first()->id;
-        if (!$jf) {
+
+        $jf = JobField::where('name', $field)->first();
+        $jl = JobLocation::where('name', $location)->first();
+
+        if ($jf == null) {
             JobField::create(['name' => $field]);
-            $jf = JobField::where('name', $field)->first()->id;
         }
-        if (!$jl) {
+        $jf = JobField::where('name', $field)->first()->id;
+
+        if ($jl == null) {
             JobLocation::create(['name' => $location]);
-            $jl = JobLocation::where('name', $location)->first()->id;
         }
+        $jl = JobLocation::where('name', $location)->first()->id;
+
         $job = new Job([
             'name' => $name,
             'company' => $company,
+            'image' => $image,
             'id_job_source' => $source,
             'id_job_field' => $jf,
             'id_job_location' => $jl,

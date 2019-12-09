@@ -22,7 +22,6 @@ Route::get('/job-location/json', 'JobLocationController@json')->name('job-locati
 Route::get('/question-code', 'TestController@codeQuestion');
 Route::get('/answer-code', 'TestController@codeAnswer');
 Route::delete('/job-delete', 'JobController@deleteExpired');
-Route::get('/send-otp', 'API\OTPController@index');
 Route::resources([
     'user' => 'UserController',
     'article' => 'ArticleController',

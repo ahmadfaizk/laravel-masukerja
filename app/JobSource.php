@@ -10,7 +10,7 @@ class JobSource extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'name',
+        'id', 'name',
     ];
 
     public function job() {
