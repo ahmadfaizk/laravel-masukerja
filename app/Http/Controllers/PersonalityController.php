@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use DataTables;
 use Illuminate\Http\Response;
 
-class MBTIPersonalityController extends Controller
+class PersonalityController extends Controller
 {
     public function __construct()
     {
@@ -60,8 +60,8 @@ class MBTIPersonalityController extends Controller
             'characteristic' => $request->characteristic,
             'suggestion' => $request->suggestion,
             'job' => $request->job,
-            'partner' => $request->partner]
-        );
+            'partner' => $request->partner
+        ]);
         return response()->json($mbti);
     }
 

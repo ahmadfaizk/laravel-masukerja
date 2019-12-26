@@ -8,6 +8,8 @@ use App\CodeQuestion;
 use App\Question;
 use Illuminate\Http\Request;
 use DataTables;
+use Illuminate\Support\Facades\DB;
+
 class TestController extends Controller
 {
     public function __construct()
@@ -57,22 +59,35 @@ class TestController extends Controller
     public function store(Request $request)
     {
         $id = $request->id;
-        $question = Question::updateOrCreate(['id' => $id], [
-            'name' => $request->question,
-            'id_code' => $request->questionCode
-        ]);
-        $idQuestion = Question::where(array('name' => $request->question))->first()->id;
+        // $question = Question::updateOrCreate(['id' => $id], [
+        //     'name' => $request->question,
+        //     'id_code' => $request->questionCode
+        // ]);
+        if ($id == null) {
+            $id = DB::table('test_question')->insertGetId([
+                'name' => $request->question,
+                'id_code' => $request->questionCode
+            ]);
+        } else {
+            $question = DB::table('test_question')
+                ->where('id', $id)
+                ->update([
+                    'name' => $request->question,
+                    'id_code' => $request->questionCode
+                ]);
+        }
+        //$idQuestion = Question::where(array('name' => $request->question))->first()->id;
         $answer1 = Answer::updateOrCreate(['id' => $request->idAnswer1], [
             'name' => $request->answer1,
             'id_code' => $request->answerCode1,
-            'id_question' => $idQuestion
+            'id_question' => $id
         ]);
         $answer2 = Answer::updateOrCreate(['id' => $request->idAnswer2], [
             'name' => $request->answer2,
             'id_code' => $request->answerCode2,
-            'id_question' => $idQuestion
+            'id_question' => $id
         ]);
-        return response()->json($answer1);
+        return response($answer1, 200);
     }
 
     /**

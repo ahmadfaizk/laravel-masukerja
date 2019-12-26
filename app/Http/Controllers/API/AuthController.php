@@ -5,15 +5,14 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\User;
 use App\OTP;
-use JWTAuth;
 use App\Mail\OTPEmail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
@@ -68,17 +67,17 @@ class AuthController extends Controller
         } catch (TokenExpiredException $e) {
             return response()->json([
                 'message' => 'Token Expired',
-                'code' => $e->getStatusCOde(),
+                'code' => $e->getStatusCode()
             ]);
         } catch (TokenInvalidException $e) {
             return response()->json([
                 'message' => 'Token Invalid',
-                'code' => $e->getStatusCOde(),
+                'code' => $e->getStatusCode()
             ]);
         } catch (JWTException $e) {
             return response()->json([
                 'message' => 'Token Absent',
-                'code' => $e->getStatusCOde(),
+                'code' => $e->getStatusCode()
             ]);
         }
 

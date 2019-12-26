@@ -30,7 +30,7 @@ class ArticleController extends Controller
                     return $row->category->name;
                 })
                 ->editColumn('date', function($row) {
-                    return Carbon::parse($row->date)->format('i:H, d M Y');
+                    return Carbon::parse($row->date)->format('H:i, d M Y');
                 })
                 ->addColumn('action', function($row) {
                     return view('admin.action', ['id' => $row->id]);

@@ -23,6 +23,13 @@ Route::group(['prefix' => 'v1'], function () {
         Route::post('verify-otp', 'API\AuthController@verifyOtp');
         Route::post('change-password', 'API\AuthController@changePassword');
     });
-    Route::get('job', 'API\JobController@index');
+    Route::group(['prefix' => 'job'], function () {
+        Route::get('/', 'API\JobController@index');
+        Route::post('search', 'API\JobController@search');
+    });
+    Route::group(['prefix' => 'test'], function () {
+        Route::get('/', 'API\TestController@index');
+    });
+    Route::get('article', 'API\ArticleController@index');
     Route::post('crawl', 'API\CrawlController@job');
 });
