@@ -161,6 +161,7 @@
         });
         $('body').on('click', '#show', function () {
             var id = $(this).data('id');
+            clearForm();
             $("#form :input").attr("disabled", true);
             $('#title-modal').html("Show Question");
             $.get('/test/' + id, function (data) {
@@ -178,6 +179,7 @@
         });
         $('body').on('click', '#edit', function () {
             var id = $(this).data('id');
+            clearForm();
             $("#form :input").attr("disabled", false);
             $.get('/test/' + id, function (data) {
                 $('#title-modal').html("Edit Question");
@@ -227,6 +229,17 @@
             });
             $('#btn-save').html('Save Changes');
         });
+        function clearForm() {
+            $('#id').val('');
+            $('#question').val('');
+            $('#questionCode').val('');
+            $('#idAnswer1').val('');
+            $('#answer1').val('');
+            $('#answerCode1').val('');
+            $('#idAnswer2').val('');
+            $('#answer2').val('');
+            $('#answerCode2').val('');
+        }
     });
 </script>
 @endpush

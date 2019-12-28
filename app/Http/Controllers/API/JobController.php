@@ -54,4 +54,15 @@ class JobController extends Controller
             ]
         ]);
     }
+
+    public function show($id) {
+        $data = DB::table('jobs')
+            ->join('job_sources', 'jobs.id_job_source', '=', 'job_sources.id')
+            ->join('job_fields', 'jobs.id_job_field', '=', 'job_fields.id')
+            ->join('job_location', 'jobs.id_job_location', '=', 'job_location.id')
+            ->select('jobs.*', 'job_sources.name as source', 'job_fields.name as field', 'job_location.name as location')
+            ->where('jobs.id', '=', $id)
+            ->first();
+        return response()->json(['data' => $data]);
+    }
 }

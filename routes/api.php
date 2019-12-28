@@ -26,9 +26,12 @@ Route::group(['prefix' => 'v1'], function () {
     Route::group(['prefix' => 'job'], function () {
         Route::get('/', 'API\JobController@index');
         Route::post('search', 'API\JobController@search');
+        Route::get('{id}', 'API\JobController@show');
     });
     Route::group(['prefix' => 'test'], function () {
         Route::get('/', 'API\TestController@index');
+        Route::post('store', 'API\TestController@store');
+        Route::get('show/{id}', 'API\TestController@show');
     });
     Route::get('article', 'API\ArticleController@index');
     Route::post('crawl', 'API\CrawlController@job');

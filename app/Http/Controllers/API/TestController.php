@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\TestCollection;
 use App\Question;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -39,5 +38,83 @@ class TestController extends Controller
             'count' => $data->count()
         ]);
         //return new TestCollection($data);
+    }
+
+    public function store(Request $request) {
+        $this->validate($request, [
+            'id_user' => 'int|required',
+            'introvert' => 'int|required',
+            'extrovert' => 'int|required',
+            'intuiting' => 'int|required',
+            'sensing' => 'int|required',
+            'thingking' => 'int|required',
+            'feeling' => 'int|required',
+            'judging' => 'int|required',
+            'perceiving' => 'int|required'
+        ]);
+
+        $i = $request->introvert;
+        $e = $request->extrovert;
+        $s = $request->sensing;
+        $n = $request->intuiting;
+        $t = $request->thingking;
+        $f = $request->feeling;
+        $j = $request->judging;
+        $p = $request->perceiving;
+
+        $mbti = "";
+
+        if($i < $e) {
+            $mbti .= "E";
+        } else {
+            $mbti .= "I";
+        }
+
+        if($s < $n) {
+            $mbti .= "N";
+        } else {
+            $mbti .= "S";
+        }
+
+        if ($t < $f) {
+            $mbti .= "F";
+        } else {
+            $mbti .= "T";
+        }
+
+        if ($j < $p) {
+            $mbti .= "P";
+        } else {
+            $mbti .= "J";
+        }
+
+        $result = DB::table('mbti_personalities')->where('name', '=', $mbti)->first();
+
+        $test = DB::table('test_results')->insert([
+            'id_user' => $request->id_user,
+            'introvert' => $request->introvert,
+            'extrovert' => $request->extrovert,
+            'intuiting' => $request->intuiting,
+            'sensing' => $request->sensing,
+            'thingking' => $request->thingking,
+            'feeling' => $request->feeling,
+            'judging' => $request->judging,
+            'perceiving' => $request->perceiving,
+            'id_personalities' => $result->id
+        ]);
+
+        return response()->json([
+            'test' => $test,
+            'result' => $result
+        ]);
+    }
+
+    public function show($id) {
+        $data = DB::table('test_results')->find($id);
+        $result = DB::table('mbti_personalities')->find($data->id);
+        return response([
+            'test' => $data,
+            'result' => $result
+        ]);
     }
 }
