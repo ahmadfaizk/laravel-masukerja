@@ -221,6 +221,7 @@
                 success: function (data) {
                     $('#form').trigger("reset");
                     $('#ajax-modal').modal('hide');
+                    clearForm();
                     table.draw();
                 },
                 error: function (data) {

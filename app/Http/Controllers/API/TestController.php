@@ -6,9 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Question;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class TestController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('jwt.verify');
+    }
+
     public function index() {
         $question = DB::table('test_question')
             ->join('code_question', 'test_question.id_code', '=', 'code_question.id')
@@ -42,7 +48,6 @@ class TestController extends Controller
 
     public function store(Request $request) {
         $this->validate($request, [
-            'id_user' => 'int|required',
             'introvert' => 'int|required',
             'extrovert' => 'int|required',
             'intuiting' => 'int|required',
@@ -52,6 +57,8 @@ class TestController extends Controller
             'judging' => 'int|required',
             'perceiving' => 'int|required'
         ]);
+
+        $id_user = JWTAuth::user()->id;
 
         $i = $request->introvert;
         $e = $request->extrovert;
@@ -91,7 +98,7 @@ class TestController extends Controller
         $result = DB::table('mbti_personalities')->where('name', '=', $mbti)->first();
 
         $test = DB::table('test_results')->insert([
-            'id_user' => $request->id_user,
+            'id_user' => $id_user,
             'introvert' => $request->introvert,
             'extrovert' => $request->extrovert,
             'intuiting' => $request->intuiting,

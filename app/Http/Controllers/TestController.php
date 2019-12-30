@@ -69,7 +69,7 @@ class TestController extends Controller
                 'id_code' => $request->questionCode
             ]);
         } else {
-            $question = DB::table('test_question')
+            $quest = DB::table('test_question')
                 ->where('id', $id)
                 ->update([
                     'name' => $request->question,
@@ -77,17 +77,31 @@ class TestController extends Controller
                 ]);
         }
         //$idQuestion = Question::where(array('name' => $request->question))->first()->id;
-        $answer1 = Answer::updateOrCreate(['id' => $request->idAnswer1], [
-            'name' => $request->answer1,
-            'id_code' => $request->answerCode1,
-            'id_question' => $id
-        ]);
-        $answer2 = Answer::updateOrCreate(['id' => $request->idAnswer2], [
-            'name' => $request->answer2,
-            'id_code' => $request->answerCode2,
-            'id_question' => $id
-        ]);
-        return response($answer1, 200);
+        // $answer1 = Answer::updateOrCreate(['id' => $request->idAnswer1], [
+        //     'name' => $request->answer1,
+        //     'id_code' => $request->answerCode1,
+        //     'id_question' => $id
+        // ]);
+        $a1 = DB::table('test_answers')
+            ->updateOrInsert(
+                ['id' => $request->idAnswer1], [
+                'name' => $request->answer1,
+                'id_code' => $request->answerCode1,
+                'id_question' => $id
+            ]);
+        // $answer2 = Answer::updateOrCreate(['id' => $request->idAnswer2], [
+        //     'name' => $request->answer2,
+        //     'id_code' => $request->answerCode2,
+        //     'id_question' => $id
+        // ]);
+        $a2 = DB::table('test_answers')
+            ->updateOrInsert(
+                ['id' => $request->idAnswer2], [
+                'name' => $request->answer2,
+                'id_code' => $request->answerCode2,
+                'id_question' => $id
+            ]);
+        return response(['answer 1' => $a1], 200);
     }
 
     /**

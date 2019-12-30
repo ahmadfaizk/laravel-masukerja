@@ -7,6 +7,8 @@ use App\Article;
 use App\ArticleCategory;
 use DataTables;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
 {
@@ -59,12 +61,28 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        $id = $request->id;
-        $source = Article::updateOrCreate(['id' => $id], [
-            'name' => $request->name,
-            'description' => $request->description,
-            'id_kategory' => $request->category,
-        ]);
+        //return response()->json($request);
+        // $this->validate($request, [
+        //     //'image' => 'required|image|max:7000',
+        //     'name' => 'required|string',
+        //     'description' => 'required|string',
+        //     'category' => 'required|int'
+        // ]);
+
+        // $path = Storage::putFile(
+        //     'public/images',
+        //     $request->file('image'),
+        // );
+
+        $source = DB::table('articles')->updateOrInsert(
+            ['id' => $request->id], [
+                'name' => $request->name,
+                //'image' => $path,
+                'description' => $request->description,
+                'id_kategory' => $request->category,
+            ]
+        );
+
         return response()->json($source);
     }
 

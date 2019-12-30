@@ -33,6 +33,7 @@ class AuthController extends Controller
         }
         return response()->json([
             'message' => 'Login Succesfull',
+            'user' => JWTAuth::user(),
             'code' => 200,
             'token' => $token
         ]);
@@ -53,7 +54,11 @@ class AuthController extends Controller
 
         $token = JWTAuth::fromUser($user);
 
-        return response()->json(compact('user', 'token'));
+        return response()->json([
+            'message' => 'Register Succesfull',
+            'user' => $user,
+            'token' => $token
+        ]);
     }
 
     public function getAuthenticatedUser() {

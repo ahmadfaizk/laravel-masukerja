@@ -42,6 +42,17 @@
                                 value="" required="">
                         </div>
                     </div>
+                    {{-- <div class="form-group">
+                        <label for="image" class="col-sm-2 control-label">Image</label>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <img src="#" id="article-image" alt="Your Image" class="img-fluid">
+                            </div>
+                            <div class="col-sm-8">
+                                <input type="file" class="form-control-file" id="image" name="image">
+                            </div>
+                        </div>
+                    </div> --}}
                     <div class="form-group">
                         <label for="category" class="col-sm-2 control-label">Kategori</label>
                         <div class="col-sm-12">
@@ -159,10 +170,17 @@
         $('#btn-save').click(function (e) {
             e.preventDefault();
             $(this).html('Sending..');
+            // var datas = new FormData();
+            // var files = $('#image').files;
+            // datas.append('image', files);
+            //datas.append('image', $('#image').files);
             $.ajax({
                 data: $('#form').serialize(),
                 url: '{{ route('article.store') }}',
                 type: "POST",
+                // cache: false,
+                // contentType: false,
+                // processData: false,
                 dataType: 'json',
                 success: function (data) {
                     $('#form').trigger("reset");
