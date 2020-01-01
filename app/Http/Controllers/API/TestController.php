@@ -26,7 +26,7 @@ class TestController extends Controller
         foreach($question as $quest) {
             $answer = DB::table('test_answers')
                 ->join('code_answer', 'test_answers.id_code', '=', 'code_answer.id')
-                ->select('test_answers.name', 'code_answer.code')
+                ->select('test_answers.id', 'test_answers.name', 'code_answer.code')
                 ->where('test_answers.id_question', '=', $quest->id)
                 ->get();
             $temp = [
@@ -43,7 +43,6 @@ class TestController extends Controller
             'data' => $data,
             'count' => $data->count()
         ]);
-        //return new TestCollection($data);
     }
 
     public function store(Request $request) {
@@ -97,7 +96,7 @@ class TestController extends Controller
 
         $result = DB::table('mbti_personalities')->where('name', '=', $mbti)->first();
 
-        $test = DB::table('test_results')->insert([
+        $test = DB::table('test_results')->insertGetId([
             'id_user' => $id_user,
             'introvert' => $request->introvert,
             'extrovert' => $request->extrovert,
@@ -110,18 +109,26 @@ class TestController extends Controller
             'id_personalities' => $result->id
         ]);
 
-        return response()->json([
-            'test' => $test,
-            'result' => $result
+        $data = DB::table('test_results')->find($test);
+        $data->result = $result;
+
+        return response([
+            'data' => $data,
         ]);
     }
 
-    public function show($id) {
-        $data = DB::table('test_results')->find($id);
-        $result = DB::table('mbti_personalities')->find($data->id);
+    public function show() {
+        $id_user = JWTAuth::user()->id;
+
+        $datas = DB::table('test_results')->where('id_user', $id_user)->get();
+        foreach($datas as $d) {
+            $result = DB::table('mbti_personalities')->find($d->id_personalities);
+            $d->result = $result;
+        };
+        // $result = DB::table('mbti_personalities')->find($data->id_personalities);
+        // $data->result = $result;
         return response([
-            'test' => $data,
-            'result' => $result
+            'data' => $datas,
         ]);
     }
 }

@@ -13,6 +13,8 @@ class ArticleController extends Controller
             ->join('article_category', 'articles.id_kategory', '=', 'article_category.id')
             ->select('articles.*', 'article_category.name as category')
             ->get();
-        return response()->json($data);
+        return response()->json([
+            'data' => $data
+        ]);
     }
 }
