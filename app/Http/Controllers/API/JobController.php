@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Support\Carbon;
 
 class JobController extends Controller
 {
@@ -39,21 +40,32 @@ class JobController extends Controller
             ->join('job_fields', 'jobs.id_job_field', '=', 'job_fields.id')
             ->join('job_location', 'jobs.id_job_location', '=', 'job_location.id')
             ->select('jobs.*', 'job_sources.name as source', 'job_fields.name as field', 'job_location.name as location')
-            ->where('jobs.name', 'like', '%'. $title .'%')
+            //->select('jobs.id', 'jobs.name', 'jobs.company', 'jobs.posting_date', 'jobs.min_salary', 'jobs.max_salary','job_sources.name as source', 'job_fields.name as field', 'job_location.name as location')
+            ->where('jobs.name', 'like', '%' . $title . '%')
             ->where('job_location.name', 'like', '%'. $location .'%')
             ->where('job_fields.name', 'like', '%'. $field .'%')
             ->whereRaw('((jobs.min_salary >= ? or jobs.max_salary >= ?) or (jobs.min_salary = 0 and jobs.max_salary = 0))', [$salary, $salary])
-            ->get();
+            ->orderBy('jobs.posting_date', 'desc')
+            ->paginate(20);
+            //->get();
+        foreach($data as $d) {
+            $d->posting_date = $this->parseDate($d->posting_date);
+            $d->closing_date = $this->parseDate($d->closing_date);
+        };
 
         return response()->json([
             'data' => $data,
             'params' => [
                 'title' => $title,
-                'salary' => $salary,
+                'field' => $field,
                 'location' => $location,
-                'field' => $field
+                'salary' => $salary
             ]
         ]);
+    }
+
+    public function parseDate($date) {
+        return Carbon::createFromFormat('Y-m-d', $date)->format('d M Y');
     }
 
     public function show($id) {
@@ -112,30 +124,78 @@ class JobController extends Controller
             ->where('users.id', $id)
             ->get();
 
+        foreach($data as $d) {
+            $d->posting_date = $this->parseDate($d->posting_date);
+            $d->closing_date = $this->parseDate($d->closing_date);
+        };
+
         return response()->json([
             'data' => $data
         ]);
     }
 
-    public function location() {
-        $data = DB::table('job_location')
+    public function searchData() {
+        $field = DB::table('job_fields')
             ->select('name')
             ->orderBy('name')
-            ->get();
+            ->get()
+            ->pluck('name');
+
+        $location = DB::table('job_location')
+            ->select('name')
+            ->orderBy('name')
+            ->get()
+            ->pluck('name');
 
         return response()->json([
-            'data' => $data->pluck('name')
+            'field' => $field,
+            'location' => $location
         ]);
     }
 
-    public function field() {
+    public function fieldCount() {
         $data = DB::table('job_fields')
-            ->select('name')
-            ->orderBy('name')
+            ->join('jobs', 'job_fields.id', '=', 'jobs.id_job_field')
+            ->select(DB::raw('job_fields.name, count(jobs.id) as jumlah'))
+            ->groupBy('job_fields.name')
+            ->orderBy('jumlah', 'desc')
+            ->take(5)
+            ->get();
+        // $all = DB::table('jobs')->count();
+        // $jumlah = 0;
+        // foreach($data as $d) {
+        //     $jumlah += $d->jumlah;
+        // }
+        // $data->push([
+        //     'name' => 'Lainnya',
+        //     'jumlah' => $all - $jumlah
+        // ]);
+        return response()->json([
+            'data' => $data,
+        ]);
+    }
+
+    public function locationCount() {
+        $data = DB::table('job_location')
+            ->join('jobs', 'job_location.id', '=', 'jobs.id_job_location')
+            ->select(DB::raw('job_location.name, count(jobs.id) as jumlah'))
+            ->groupBy('job_location.name')
             ->get();
 
         return response()->json([
-            'data' => $data->pluck('name')
+            'data' => $data
+        ]);
+    }
+
+    public function sourceCount() {
+        $data = DB::table('job_sources')
+            ->join('jobs', 'job_sources.id', '=', 'jobs.id_job_source')
+            ->select(DB::raw('job_sources.name, count(jobs.id) as jumlah'))
+            ->groupBy('job_sources.name')
+            ->get();
+
+        return response()->json([
+            'data' => $data
         ]);
     }
 }

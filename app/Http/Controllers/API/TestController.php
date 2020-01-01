@@ -120,7 +120,11 @@ class TestController extends Controller
     public function show() {
         $id_user = JWTAuth::user()->id;
 
-        $datas = DB::table('test_results')->where('id_user', $id_user)->get();
+        $datas = DB::table('test_results')
+            ->where('id_user', $id_user)
+            ->orderBy('date', 'desc')
+            ->get();
+
         foreach($datas as $d) {
             $result = DB::table('mbti_personalities')->find($d->id_personalities);
             $d->result = $result;

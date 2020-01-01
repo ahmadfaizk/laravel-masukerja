@@ -26,11 +26,15 @@ Route::group(['prefix' => 'v1'], function () {
     Route::group(['prefix' => 'job'], function () {
         Route::get('/', 'API\JobController@index');
         Route::post('search', 'API\JobController@search');
-        Route::get('location', 'API\JobController@location');
-        ROute::get('field', 'API\JobController@field');
+        ROute::get('data', 'API\JobController@searchData');
         Route::post('favorite', 'API\JobController@setFavorite');
         Route::get('favorite', 'API\JobController@getFavorite');
         Route::get('{id}', 'API\JobController@show');
+        Route::group(['prefix' => 'statistic'], function () {
+            Route::get('field', 'API\JobController@fieldCount');
+            Route::get('location', 'API\JobController@locationCount');
+            Route::get('source', 'API\JobController@sourceCount');
+        });
     });
     Route::group(['prefix' => 'test'], function () {
         Route::get('/', 'API\TestController@index');
